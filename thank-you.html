@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPLX8FV4M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZRPLX8FV4M');
+    </script>
+
+    <meta charset="UTF-8">
+    <title>Thank You | UpGrade Tutors</title>
+    <meta name="description" content="Thanks for your enquiry with UpGrade Tutors. We'll be in touch within 1 to 2 business days.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#544d3f">
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <!-- Re-uses the site's existing stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
+
+    <style>
+        /* ===== Thank-you page (kept in-page so it can drop into the existing site) ===== */
+
+        .thankyou-page {
+            position: relative;
+            min-height: 100vh;
+            background-color: #e6e3df;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .thankyou-page::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -31%;
+            width: 0;
+            height: 0;
+            border-left: 70vw solid rgba(247, 194, 124, 0.35);
+            border-top: 30vw solid rgba(247, 194, 124, 0.35);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .thankyou-page::after {
+            content: "";
+            position: absolute;
+            bottom: -18%;
+            right: -22%;
+            width: 0;
+            height: 0;
+            border-left: 60vw solid rgba(207, 215, 201, 1);
+            border-top: 32vw solid rgba(207, 215, 201, 1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .thankyou-header {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            padding-top: 3vh;
+            text-align: center;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .thankyou-header:hover {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
+
+        
+
+        .thankyou-header a {
+            display: inline-flex;
+        }
+
+        #thankyou-logo {
+            width: clamp(150px, 16vw, 220px);
+        }
+
+        .thankyou-wrapper {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4vh 5vw 8vh 5vw;
+        }
+
+        .thankyou-card {
+            width: min(560px, 90vw);
+            background-color: #585143;
+            border: 2px solid #f3af52;
+            border-radius: 25px;
+            padding: 6vh 6vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .thankyou-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: #f3af52;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3vh;
+        }
+
+        .thankyou-icon svg {
+            width: 34px;
+            height: 34px;
+        }
+
+        .thankyou-eyebrow {
+            font-family: Inter;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: clamp(0.65rem, 1vw, 0.85rem);
+            color: #f3af52;
+            margin-bottom: 1.5vh;
+        }
+
+        .thankyou-card h1 {
+            font-family: Outfit;
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            color: #f0efeb;
+            margin-bottom: 2.5vh;
+        }
+
+        .thankyou-card p.thankyou-text {
+            font-family: Inter;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+            color: #d8d5cf;
+            max-width: 40ch;
+            margin-bottom: 4.5vh;
+        }
+
+        .thankyou-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: center;
+        }
+
+        .thankyou-btn {
+            border-radius: 9px;
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.15rem;
+            padding: 0.7rem 1.4rem;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, letter-spacing 0.3s ease;
+        }
+
+        .thankyou-btn:hover {
+            transform: scale(1.06);
+            cursor: pointer;
+            letter-spacing: 0.25rem;
+        }
+
+        .thankyou-btn-primary {
+            border: 3px solid #f3af52;
+            background-color: #c4bcad;
+            color: #252525;
+        }
+
+        .thankyou-btn-primary:hover {
+            background-color: #403e3a;
+            color: white;
+        }
+
+        .thankyou-btn-secondary {
+            border: 2px solid #f0efeb;
+            background-color: transparent;
+            color: #f0efeb;
+        }
+
+        .thankyou-btn-secondary:hover {
+            background-color: #f0efeb;
+            color: #544d3f;
+        }
+
+        .thankyou-note {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            font-family: InclusiveSans;
+            font-weight: 300;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            color: #625b4e;
+            padding-bottom: 4vh;
+        }
+
+        @media (max-width: 700px) {
+            .thankyou-card {
+                padding: 6vh 8vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="thankyou-page">
+
+        <header class="thankyou-header">
+            <a href="index.html" aria-label="UpGrade Tutors home">
+                <svg id = "title-svg" version="1.0" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 578.928444 178.866133"
+        preserveAspectRatio="xMidYMid meet">
+        <g transform="translate(-68.048462,235.905401) scale(0.100000,-0.100000)"
+        fill="#000000" stroke="none">
+        <path d="M4443 2353 c-16 -6 -17 -49 -3 -58 6 -4 10 -21 9 -38 -1 -18 7 -50
+        17 -72 17 -36 19 -64 18 -262 -1 -122 -7 -275 -14 -340 -12 -118 -11 -120 16
+        -207 30 -98 58 -126 122 -126 33 0 83 37 93 69 4 10 38 16 134 21 150 9 190
+        22 253 83 79 77 139 211 162 363 13 84 8 157 -16 244 -38 133 -104 208 -227
+        256 -66 26 -84 28 -212 30 -114 2 -150 6 -195 23 -51 19 -128 26 -157 14z
+        m381 -108 c78 -27 112 -56 149 -123 67 -123 60 -341 -17 -551 -33 -90 -97
+        -141 -197 -157 l-42 -7 8 159 c4 87 9 281 10 429 2 149 4 271 4 273 2 5 19 1
+        85 -23z m-229 -325 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2 10 4 10 3 0 8
+        -4 11 -10z m42 -32 c-3 -8 -6 -5 -6 6 -1 11 2 17 5 13 3 -3 4 -12 1 -19z m-27
+        -43 c-7 -9 -15 -13 -17 -11 -7 7 7 26 19 26 6 0 6 -6 -2 -15z m501 -22 c13
+        -16 12 -17 -3 -4 -17 13 -22 21 -14 21 2 0 10 -8 17 -17z m-471 -8 c-7 -8 -17
+        -15 -22 -15 -6 0 -5 7 2 15 7 8 17 15 22 15 6 0 5 -7 -2 -15z m20 -76 c0 -6
+        -4 -7 -10 -4 -5 3 -10 11 -10 16 0 6 5 7 10 4 6 -3 10 -11 10 -16z"/>
+        <path d="M817 2329 c-30 -16 -37 -24 -31 -37 16 -35 15 -117 -1 -278 -9 -91
+        -14 -180 -11 -198 3 -17 8 -92 11 -166 6 -146 14 -187 45 -237 44 -73 170
+        -131 253 -118 91 16 128 52 196 195 70 146 81 197 81 365 0 77 5 190 11 250
+        18 172 22 156 -44 189 -49 24 -60 27 -68 15 -5 -8 -7 -23 -3 -34 9 -31 4 -467
+        -7 -575 -12 -123 -17 -146 -44 -201 -31 -60 -48 -74 -74 -60 -26 14 -44 74
+        -72 238 -19 113 -21 147 -14 283 10 196 10 195 3 258 -8 64 -19 78 -83 108
+        -61 29 -98 29 -148 3z m56 -374 c-3 -9 -8 -14 -10 -11 -3 3 -2 9 2 15 9 16 15
+        13 8 -4z m87 -385 c0 -5 -5 -10 -11 -10 -5 0 -7 5 -4 10 3 6 8 10 11 10 2 0 4
+        -4 4 -10z m-36 -45 c-4 -8 -11 -15 -16 -15 -6 0 -5 6 2 15 7 8 14 15 16 15 2
+        0 1 -7 -2 -15z"/>
+        <path d="M1853 2325 c-18 -7 -49 -25 -70 -39 -36 -25 -37 -25 -55 -6 -24 26
+        -89 43 -163 44 l-60 1 -18 -200 c-24 -279 -12 -719 22 -759 62 -74 180 -51
+        181 36 1 18 7 44 15 58 11 18 14 63 15 171 l0 145 92 13 c108 14 149 31 204
+        86 30 31 49 63 72 129 43 118 40 181 -11 257 -50 74 -142 100 -224 64z m60
+        -139 c14 -13 29 -36 33 -50 17 -70 -43 -221 -105 -263 -39 -26 -93 -30 -111
+        -8 -17 21 -8 217 13 266 32 77 117 104 170 55z m-333 -210 c0 -2 -7 -7 -16
+        -10 -8 -3 -12 -2 -9 4 6 10 25 14 25 6z m15 -36 c-3 -5 -12 -10 -18 -10 -7 0
+        -6 4 3 10 19 12 23 12 15 0z m20 -280 c-3 -5 -11 -10 -16 -10 -6 0 -7 5 -4 10
+        3 6 11 10 16 10 6 0 7 -4 4 -10z"/>
+        <path d="M2801 2306 c-22 -24 -23 -27 -10 -78 10 -39 13 -101 9 -233 -9 -387
+        -6 -516 13 -575 22 -65 49 -97 89 -105 47 -11 118 4 143 29 22 22 22 24 17
+        257 -5 261 -5 263 59 257 31 -3 35 -8 62 -78 18 -47 32 -110 38 -168 23 -219
+        117 -409 285 -574 257 -253 625 -411 1066 -458 125 -13 377 -13 509 0 606 62
+        1126 369 1295 766 26 61 29 64 61 64 18 0 33 3 33 8 -1 14 -68 273 -73 278 -4
+        4 -167 -269 -167 -280 0 -3 14 -6 31 -6 27 0 30 -3 23 -22 -41 -136 -212 -345
+        -374 -459 -297 -211 -674 -323 -1080 -322 -450 1 -872 145 -1175 401 -64 54
+        -158 159 -198 222 l-16 25 60 -3 c43 -3 67 1 84 12 32 21 31 32 -3 50 -23 12
+        -30 26 -45 88 -9 40 -35 130 -57 200 -44 139 -86 205 -160 254 -22 15 -40 30
+        -40 34 0 4 18 15 39 25 53 23 112 86 120 127 23 109 -73 231 -203 258 -54 11
+        -97 6 -164 -21 -28 -12 -37 -11 -65 3 -108 54 -171 61 -206 24z m398 -81 c34
+        -17 41 -38 41 -123 0 -87 -25 -135 -84 -157 -75 -29 -80 -24 -88 85 -3 52 -9
+        111 -12 130 -6 41 1 55 34 69 36 14 77 13 109 -4z m-289 -289 c0 -2 -7 -7 -16
+        -10 -8 -3 -12 -2 -9 4 6 10 25 14 25 6z m10 -36 c0 -5 -5 -10 -11 -10 -5 0 -7
+        5 -4 10 3 6 8 10 11 10 2 0 4 -4 4 -10z m460 -320 c0 -5 -4 -10 -10 -10 -5 0
+        -10 5 -10 10 0 6 5 10 10 10 6 0 10 -4 10 -10z m30 -20 c0 -5 -4 -10 -10 -10
+        -5 0 -10 5 -10 10 0 6 5 10 10 10 6 0 10 -4 10 -10z m4 -46 c3 -8 2 -12 -4 -9
+        -6 3 -10 10 -10 16 0 14 7 11 14 -7z m-434 -8 c0 -3 -4 -8 -10 -11 -5 -3 -10
+        -1 -10 4 0 6 5 11 10 11 6 0 10 -2 10 -4z"/>
+        <path d="M5372 2303 c-6 -16 -13 -86 -16 -158 -4 -71 -13 -202 -22 -290 -32
+        -320 7 -473 130 -506 83 -22 166 -6 328 64 80 34 140 102 109 122 -5 3 -51 -8
+        -100 -25 -132 -43 -165 -39 -216 30 -19 26 -24 42 -19 63 3 15 1 34 -5 41 -9
+        10 -7 27 9 65 11 29 20 60 20 71 0 27 39 50 99 57 37 4 56 12 67 27 13 19 12
+        21 -3 27 -10 4 -47 4 -82 1 l-64 -5 6 29 c4 16 14 80 22 143 9 63 20 122 25
+        130 9 18 143 61 190 61 31 0 70 30 70 54 0 7 -10 16 -22 20 -26 6 -184 -9
+        -252 -24 -37 -8 -56 -6 -108 10 -35 11 -84 20 -109 20 -42 0 -48 -3 -57 -27z
+        m78 -443 c0 -5 -2 -10 -4 -10 -3 0 -8 5 -11 10 -3 6 -1 10 4 10 6 0 11 -4 11
+        -10z m45 -20 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2 10 4 10 3 0 8 -4 11
+        -10z m-35 -45 c-7 -8 -18 -15 -24 -15 -6 0 -3 7 8 15 11 8 15 19 11 27 -6 10
+        -5 10 5 1 11 -10 11 -15 0 -28z m30 -30 c0 -2 -10 -9 -22 -15 -22 -11 -22 -10
+        -4 4 21 17 26 19 26 11z m0 -85 c0 -5 -2 -10 -4 -10 -3 0 -8 5 -11 10 -3 6 -1
+        10 4 10 6 0 11 -4 11 -10z"/>
+        <path d="M3974 2296 c-41 -18 -101 -81 -143 -151 -68 -112 -203 -488 -228
+        -635 -19 -108 -13 -159 19 -179 32 -20 40 -2 72 151 43 202 54 222 136 234 25
+        3 76 13 114 20 50 10 73 11 80 4 7 -7 11 -74 11 -183 0 -95 4 -179 8 -188 8
+        -17 159 -64 238 -75 43 -6 48 -4 64 20 15 22 16 41 11 119 -3 50 -10 202 -15
+        337 -13 349 -21 384 -108 460 -80 71 -186 97 -259 66z m63 -155 c4 -31 8 -109
+        8 -173 0 -92 -3 -121 -15 -133 -9 -9 -49 -19 -97 -25 -45 -6 -98 -17 -118 -26
+        -21 -8 -40 -13 -43 -10 -10 11 32 142 71 221 47 96 122 211 145 224 24 14 39
+        -10 49 -78z m118 -301 c3 -5 2 -10 -4 -10 -5 0 -13 5 -16 10 -3 6 -2 10 4 10
+        5 0 13 -4 16 -10z m25 -64 c0 -2 -7 -9 -15 -16 -13 -11 -14 -10 -9 4 5 14 24
+        23 24 12z m25 -36 c-10 -11 -20 -18 -23 -16 -5 6 21 35 32 36 5 0 1 -9 -9 -20z
+        m20 -70 c3 -5 2 -10 -4 -10 -5 0 -13 5 -16 10 -3 6 -2 10 4 10 5 0 13 -4 16
+        -10z"/>
+        <path d="M2453 2286 c-50 -16 -159 -92 -199 -138 -33 -39 -86 -151 -108 -228
+        -41 -145 -39 -330 6 -448 12 -31 21 -64 20 -72 -1 -8 6 -20 17 -25 10 -6 41
+        -23 67 -40 45 -28 56 -30 139 -30 75 0 97 4 135 24 132 70 188 174 174 328 -9
+        102 -14 106 -99 93 -39 -5 -92 -13 -118 -16 -37 -4 -47 -9 -45 -21 4 -24 54
+        -34 131 -27 l67 7 0 -57 c0 -173 -133 -305 -219 -218 -70 70 -89 216 -51 405
+        27 135 71 225 149 302 l61 59 28 -27 c16 -16 34 -46 41 -67 13 -44 22 -53 45
+        -44 12 4 16 19 16 53 0 40 -6 54 -35 88 -38 45 -116 99 -155 107 -14 3 -44 -1
+        -67 -8z m-223 -426 c0 -5 -2 -10 -4 -10 -3 0 -8 5 -11 10 -3 6 -1 10 4 10 6 0
+        11 -4 11 -10z m45 -20 c3 -5 1 -10 -4 -10 -6 0 -11 5 -11 10 0 6 2 10 4 10 3
+        0 8 -4 11 -10z m-35 -45 c-7 -8 -18 -15 -24 -15 -6 0 -3 7 8 15 11 8 15 19 11
+        27 -6 10 -5 10 5 1 11 -10 11 -15 0 -28z m30 -30 c0 -2 -10 -9 -22 -15 -22
+        -11 -22 -10 -4 4 21 17 26 19 26 11z m0 -85 c0 -5 -2 -10 -4 -10 -3 0 -8 5
+        -11 10 -3 6 -1 10 4 10 6 0 11 -4 11 -10z"/>
+        <path d="M757 1213 c-15 -29 -38 -60 -52 -69 -35 -23 -32 -44 5 -44 l30 0 0
+        -179 c0 -165 2 -180 21 -205 27 -34 68 -34 108 0 27 22 45 62 24 52 -5 -2 -21
+        -10 -36 -18 -25 -12 -30 -12 -45 4 -14 14 -17 42 -20 181 l-3 165 50 0 c44 0
+        51 3 51 20 0 17 -7 20 -50 20 l-49 0 -3 63 -3 62 -28 -52z"/>
+        <path d="M1637 1213 c-15 -29 -38 -60 -52 -69 -35 -23 -32 -44 5 -44 l30 0 0
+        -179 c0 -165 2 -180 21 -205 27 -34 68 -34 108 0 27 22 45 62 24 52 -5 -2 -21
+        -10 -36 -18 -25 -12 -30 -12 -45 4 -14 14 -17 42 -20 181 l-3 165 50 0 c44 0
+        51 3 51 20 0 17 -7 20 -50 20 l-49 0 -3 63 -3 62 -28 -52z"/>
+        <path d="M2095 1144 c-6 -1 -22 -5 -37 -8 -75 -17 -130 -107 -130 -216 0 -149
+        94 -247 218 -227 91 15 148 103 148 228 0 93 -28 157 -81 190 -33 21 -97 38
+        -118 33z m54 -49 c47 -24 81 -105 81 -192 0 -115 -35 -173 -106 -173 -70 0
+        -124 81 -132 198 -4 56 -1 82 13 113 29 63 86 85 144 54z"/>
+        <path d="M2950 1139 c-39 -8 -76 -49 -82 -90 -8 -56 13 -90 95 -152 93 -70
+        111 -94 98 -130 -29 -77 -136 -55 -162 34 -19 60 -29 47 -29 -37 0 -63 2 -74
+        13 -65 10 8 29 7 70 -1 48 -10 61 -10 91 5 47 22 71 61 70 114 -1 52 -15 70
+        -111 134 -99 67 -114 99 -68 144 45 45 96 28 119 -40 22 -64 37 -57 34 16 -3
+        55 -6 64 -21 61 -9 -2 -32 1 -50 6 -17 5 -48 5 -67 1z"/>
+        <path d="M1045 1131 c-3 -6 7 -16 22 -23 l28 -13 6 -165 c3 -103 10 -175 18
+        -191 31 -63 105 -63 171 -1 l39 38 3 -42 3 -41 53 20 c51 19 71 47 33 47 -36
+        0 -40 22 -43 201 l-3 174 -54 3 c-68 4 -87 -11 -38 -31 31 -14 36 -21 42 -62
+        4 -25 5 -87 3 -137 -4 -90 -5 -91 -41 -124 -36 -34 -77 -43 -105 -26 -23 15
+        -32 77 -32 229 l0 153 -49 0 c-28 0 -52 -4 -56 -9z"/>
+        <path d="M2483 1114 c-57 -27 -68 -44 -28 -44 14 0 29 -8 35 -19 5 -11 10 -81
+        10 -155 0 -123 -2 -138 -20 -156 -11 -11 -27 -20 -35 -20 -8 0 -15 -4 -15 -10
+        0 -6 40 -10 100 -10 55 0 100 3 100 8 0 4 -15 14 -32 22 -41 19 -51 56 -46
+        176 3 79 6 96 31 133 22 32 32 41 45 35 9 -4 31 -8 47 -8 24 -1 31 4 33 22 5
+        31 -15 52 -48 52 -21 0 -39 -12 -69 -47 l-41 -48 0 48 c0 26 -3 47 -7 46 -5 0
+        -32 -12 -60 -25z"/>
+        </g>
+                </svg>
+            </a>
+        </header>
+
+        <div class="thankyou-wrapper">
+            <div class="thankyou-card">
+
+                <div class="thankyou-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <p class="thankyou-eyebrow">Enquiry received</p>
+                <h1>Thank you!</h1>
+                <p class="thankyou-text">
+                    Your message has been sent. A member of the UpGrade Tutors team will
+                    get back to you within 1 to 2 business days to arrange your first lesson.
+                </p>
+
+                <div class="thankyou-buttons">
+                    <a class="thankyou-btn thankyou-btn-secondary" href="index.html">Back to Home</a>
+                </div>
+
+            </div>
+        </div>
+
+        <p class="thankyou-note">UpGrade Now &amp; Boost Ahead</p>
+
+    </div>
+
+</body>
+</html>
