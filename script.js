@@ -288,82 +288,132 @@ levelSelect.addEventListener('change', updateSubjectInfo);
         updateAddButtons();
     }
 
+    // Form submission and redirect
+    const contactForm = document.querySelector('.contact-form');
 
-//review section
-const container = document.querySelector('.review-container');
-const positions = ['far-left', 'left', 'active', 'right', 'far-right'];
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
 
-function getCards() {
-    return [...container.querySelectorAll('.review')];
-}
+            // Stop Formspree from controlling the page redirect
+            e.preventDefault();
 
-function assignClasses() {
-    getCards().forEach((card, i) => {
-        card.classList.remove(...positions);
-        card.classList.add(positions[i]);
-    });
-}
+            const submitButton = contactForm.querySelector('.contact-submit');
 
-function rotateLeft() {
-    const cards = getCards();
-    container.prepend(cards[cards.length - 1]);
-    assignClasses();
-}
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
 
-function rotateRight() {
-    const cards = getCards();
-    container.appendChild(cards[0]);
-    assignClasses();
-}
+            const formData = new FormData(contactForm);
 
-document.getElementById('arrow-left').addEventListener('click', rotateLeft);
-document.getElementById('arrow-right').addEventListener('click', rotateRight);
+            try {
 
-container.addEventListener('click', (e) => {
-    const card = e.target.closest('.review');
-    if (!card) return;
-    const i = getCards().indexOf(card);
-    if (i < 2) rotateLeft();
-    else if (i > 2) rotateRight();
-});
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
 
-assignClasses();
+                if (response.ok) {
 
-});
+                    // Formspree accepted the submission
+                    window.location.href = 'https://upgrade-tutors.com/thank-you.html';
 
+                } else {
 
+                    throw new Error('Form submission failed');
 
-//mobile services scrollbar 
-const container = document.querySelector('.services-container');
-const thumb = document.getElementById('services-thumb');
+                }
 
-container.addEventListener('scroll', () => {
-    const scrolled = container.scrollLeft;
-    const maxScroll = container.scrollWidth - container.clientWidth;
-    const percent = (scrolled / maxScroll) * 100;
-    thumb.style.left = `calc(${percent}% - 6px)`;
-});
+            } catch (error) {
 
+                console.error(error);
 
-//mobile about boxes
-const aboutTrack = document.querySelector('.about-track');
-const aboutDots = document.querySelectorAll('.about-dot');
-const aboutThumb = document.getElementById('about-thumb');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit';
 
-if (aboutTrack) {
-    aboutTrack.addEventListener('scroll', () => {
-        // dots
-        const total = aboutTrack.scrollWidth - aboutTrack.clientWidth;
-        const progress = aboutTrack.scrollLeft / total;
-        const index = Math.round(progress * (aboutDots.length - 1));
-        aboutDots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
+                alert('There was a problem sending your enquiry. Please try again.');
+
+            }
         });
+    }
 
-        // thumb
-        if (aboutThumb) {
-            const percent = (aboutTrack.scrollLeft / total) * 100;
-            aboutThumb.style.left = `calc(${percent}% - 6px)`;
-        }
-    }, { passive: true });
-}
+
+    //review section
+    const container = document.querySelector('.review-container');
+    const positions = ['far-left', 'left', 'active', 'right', 'far-right'];
+
+    function getCards() {
+        return [...container.querySelectorAll('.review')];
+    }
+
+    function assignClasses() {
+        getCards().forEach((card, i) => {
+            card.classList.remove(...positions);
+            card.classList.add(positions[i]);
+        });
+    }
+
+    function rotateLeft() {
+        const cards = getCards();
+        container.prepend(cards[cards.length - 1]);
+        assignClasses();
+    }
+
+    function rotateRight() {
+        const cards = getCards();
+        container.appendChild(cards[0]);
+        assignClasses();
+    }
+
+    document.getElementById('arrow-left').addEventListener('click', rotateLeft);
+    document.getElementById('arrow-right').addEventListener('click', rotateRight);
+
+    container.addEventListener('click', (e) => {
+        const card = e.target.closest('.review');
+        if (!card) return;
+        const i = getCards().indexOf(card);
+        if (i < 2) rotateLeft();
+        else if (i > 2) rotateRight();
+    });
+
+    assignClasses();
+
+    });
+
+
+
+    //mobile services scrollbar 
+    const container = document.querySelector('.services-container');
+    const thumb = document.getElementById('services-thumb');
+
+    container.addEventListener('scroll', () => {
+        const scrolled = container.scrollLeft;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const percent = (scrolled / maxScroll) * 100;
+        thumb.style.left = `calc(${percent}% - 6px)`;
+    });
+
+
+    //mobile about boxes
+    const aboutTrack = document.querySelector('.about-track');
+    const aboutDots = document.querySelectorAll('.about-dot');
+    const aboutThumb = document.getElementById('about-thumb');
+
+    if (aboutTrack) {
+        aboutTrack.addEventListener('scroll', () => {
+            // dots
+            const total = aboutTrack.scrollWidth - aboutTrack.clientWidth;
+            const progress = aboutTrack.scrollLeft / total;
+            const index = Math.round(progress * (aboutDots.length - 1));
+            aboutDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // thumb
+            if (aboutThumb) {
+                const percent = (aboutTrack.scrollLeft / total) * 100;
+                aboutThumb.style.left = `calc(${percent}% - 6px)`;
+            }
+        }, { passive: true });
+    }
