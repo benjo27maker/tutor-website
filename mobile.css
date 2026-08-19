@@ -1,0 +1,708 @@
+#mobile-island { display: none; }
+
+#hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 200;
+    position: relative;
+    top: auto;
+    right: auto;
+}
+
+#hamburger span {
+    display: block;
+    width: 34px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: transform 0.3s ease;
+}
+
+#hamburger.open span:nth-child(1) { transform: translateY(-6px)}
+#hamburger.open span:nth-child(3) { transform: translateY(6px)}
+
+#mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(84, 77, 63, 0.97);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+#mobile-nav.open { opacity: 1; pointer-events: all; }
+#mobile-nav a {
+    font-family: Inter, sans-serif;
+    font-size: 1.7rem;
+    color: white;
+    letter-spacing: 3px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+@media (max-width: 768px) {
+
+    #mobile-island {
+        display: flex;
+        position: fixed;
+        top: 2vh;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 92vw;
+        height: 16vw;
+        background-color: #544d3f;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 3vw 0 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        z-index: 200;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    #island-logo {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 90%;
+        width: 70%;
+        left: 2%;
+    }
+
+    #island-arrow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    #island-logo-text {
+        position: relative;
+        z-index: 1;
+        width: 200vw;
+        height: 60%;
+        scale: 1.5;
+        left: -5%;
+        
+    }
+
+    #mobile-nav { display: flex; }
+ 
+    /* ── Global ─────────────────────────────────────────────── */
+    body { overflow-x: hidden; }
+    #hamburger { display: flex; }
+    #mobile-nav { display: flex; }
+    #navbar { display: none !important; }
+    #navbar-blur { display: none; }
+ 
+    /* ── Home ───────────────────────────────────────────────── */
+    .home-page { background-position: 65% center; height: 100vh; border-radius: 0; }
+    .home-page::after { display: none; }
+    .title-menu-container {display: none;}
+    #title-container { width: clamp(140px, 55vw, 240px); }
+    .menu { display: none; }
+    .banner { margin: 33vh 0 0 6vw; }
+    .banner::before { font-size: 4vw; letter-spacing: 5px; }
+    .banner h1 { font-size: clamp(2.2rem, 11vw, 4rem); letter-spacing: 0.15rem; }
+    .book-now-button { margin: 10vh 0 0 6vw; }
+    .book-now-button p { font-size: 1.2rem; }
+ 
+    /* ── FIX 2 — About boxes: compact, text fills space ─────── */
+    .about-page {
+        opacity: 0;
+        transform: translateY(40px);
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.8s ease, visibility 0.8s ease;
+    }
+
+    .about-page.about-visible {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+    .about-page::after, .about-page::before { display: none; }
+    .about-banner { font-size: clamp(1.3rem, 6vw, 2.5rem); margin-left: 6vw; padding-top: 8vh; letter-spacing: 2px; }
+    .about-banner::before { font-size: 4vw; }
+
+
+
+    .about-boxes {
+        overflow: hidden;
+        margin: 5vw 0 6vw 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-track {
+        display: flex;
+        flex-direction: row;
+        gap: 8vw;
+        padding: 4vw 10vw;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        box-sizing: border-box;
+    }
+
+    .about-track::-webkit-scrollbar { display: none; }
+
+    .about-box {
+        flex: 0 0 75vw;
+        height: 38vh;
+        scroll-snap-align: center;
+        min-height: unset;
+        padding: 4vw;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-box h2 { font-size: clamp(0.95rem, 4vw, 1.4rem); margin-bottom: 2vw; text-align: center; }
+    .about-box p  { font-size: clamp(0.8rem, 3.2vw, 1rem); max-width: 100%; text-align: center; }
+    .about-button {
+        position: relative;
+        top: auto; left: auto;
+        width: auto;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 1vw;
+        margin-top: 1vh;
+    }
+
+    .about-dots {
+        display: flex;
+        justify-content: center;
+        gap: 2vw;
+        margin-top: 3vw;
+    }
+
+    .about-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #d4cfc7;
+        transition: background-color 0.3s ease;
+    }
+
+    .about-dot.active {
+        background-color: #f3af52;
+    }
+
+    .about-button p { font-size: 3.5vw; margin: 0; margin-top: 0.8vh;}
+    #cap-svg       { width: 28%; margin-top: -2vh; margin-bottom: 2vw; }
+    #lightbulb-svg { width: 45%; margin-top: -1vh; margin-bottom: 2vw; }
+    #results-svg   { width: 16%; margin-top: 2vw; margin-bottom: 2vw; }
+ 
+    /* ── FIX 3 — Services: horizontal scroll cards ──────────── */
+    .services-page {
+        display: flex;
+        flex-direction: column;
+    }
+    .service-top {
+        order: 2;
+    }
+
+    .service-bottom {
+        order: 1;
+    }
+    .services-page::after { display: none; }
+    .service-banner {
+        font-size: clamp(0rem, 4.5vw, 2.5rem);
+        margin-left: 6vw;
+        padding-top: 8vh;
+        letter-spacing: 3px;
+    }
+    .service-banner::before { display: none;}
+    .service-text { margin: 0 6vw; }
+    .service-text-wrapper { gap: 4vw; }
+    .service-text-wrapper svg { min-width: 3vw; width: 3vw; margin-top: 0.5vh; }
+    .service-text-wrapper p { font-size: clamp(0.85rem, 2vw, 1rem); width: 100%; min-width: unset; }
+ 
+    /* Horizontal scrolling card strip */
+    .services-container {
+        width: 100%;
+        height: auto;
+        background: none;
+        border-radius: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: visible;
+        gap: 4vw;
+        padding: 4vw 6vw 6vw 6vw;
+        margin-top: 6vw;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .services-container::-webkit-scrollbar { display: none; }
+
+    .scroll-track {
+        width: 40%;
+        height: 5px;
+        background-color: #d4cfc7;
+        border-radius: 2px;
+        margin: 0 auto 4vw auto;
+        position: relative;
+    }
+
+    .scroll-thumb {
+        height: 10px;
+        width: 10px;
+        background-color: #f3af52;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0%;
+        transition: left 0.1s ease;
+    }
+ 
+    .service {
+        flex: 0 0 44vw;         /* fixed width, doesn't shrink */
+        height: 20vh;
+        padding: 5vw 3vw;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3vw;
+        border-radius: 14px;
+        background-color: #aeb2b4;
+        width: unset;
+    }
+    .service p {
+        font-size: clamp(0.85rem, 3.5vw, 1rem);
+        text-align: center;
+        margin: 0;
+        letter-spacing: 1.5px;
+    }
+    .service svg { width: 18vw !important; height: 18vw !important; flex-shrink: 0; margin: 0 !important; }
+    #service-1 { margin-left: 0; }
+    #service-4 { margin-right: 0; }
+    .service-connectors { display: none; }
+ 
+    /* Subject form — FIX 3 continued: centered */
+    .subject-banner {
+        font-size: clamp(1.2rem, 5vw, 2.5rem);
+        margin-left: 6vw;
+        padding-top: 8vh;
+        letter-spacing: 3px;
+    }
+
+    .subject-banner::before {
+
+        content: "Our services:";
+        display: block;
+        text-align: left;
+        font-size: 4vw;
+        font-weight: 300;
+        width: 50vw;
+        text-decoration: underline;
+
+
+        font-family: Inter;
+    }
+
+    .subject-body {
+        flex-direction: column;
+        width: 90%;
+        margin: 0 auto;         /* centered */
+        gap: 6vw;
+        padding-bottom: 8vw;
+        align-items: center;
+    }
+    .subject-form {
+        flex-direction: row;    /* side by side dropdowns */
+        gap: 4vw;
+        justify-content: center;
+    }
+    .subject-form-group select {
+        width: 38vw;
+        font-size: 4vw;
+        height: 10vw;
+        border-radius: 10px;
+    }
+    .subject-info {
+        width: 90vw;
+        height: auto;
+        margin: 0 auto;
+        padding-bottom: 4vw;
+    }
+    .subject-title p { font-size: 7vw; padding: 3vw; }
+    .subject-text p { font-size: clamp(0.85rem, 3.5vw, 1rem); padding: 0 3vw; }
+    .subject-button {
+        position: relative; top: auto;
+        margin: 4vw auto 0 auto;
+        padding: 2vw 6vw;
+        font-size: 0.9rem;
+        display: block;
+        width: fit-content;
+    }
+ 
+    /* ── FIX 4 — Tutors: text above, carousel 2.5 cards tall ── */
+    .tutors-page { height: auto; min-height: unset; scroll-margin-top: 4vh;}
+    .tutors-page::after { display: none; }
+    .tutor-body {
+        flex-direction: column-reverse; /* text first (top), carousel second */
+    }
+    .tutor-text {
+        padding: 8vw 6vw 6vw 6vw;
+        margin-top: 0;
+        width: auto;
+        box-sizing: border-box;
+    }
+    .tutor-text-title h2::before { font-size: 3vw; width: 90vw; }
+    .tutor-text-title h2 { font-size: clamp(1.4rem, 4.5vw, 2.5rem); letter-spacing: 3px; padding-bottom: 3vw; }
+    .tutor-text-body { width: 100%; }
+    .tutor-text-body p { font-size: clamp(0.85rem, 2vw, 1rem); }
+    #find-your-tutor-button { width: 30%; margin-top: 5vw; padding: 3vw; font-size: 0.85rem; justify-self: center; }
+ 
+    /* Carousel: 2.5 cards visible = card height × 2.5 + gaps */
+    .tutors {
+        height: calc(44vw * 2.5 + 2 * 3rem); /* 2.5 × card-height + 2 gaps */
+        width: 100%;
+        border-radius: 30px;
+        gap: 4vw;
+    }
+    .tutors-column { width: 44vw; height: 60vh;}
+    .tutor-card    { width: 44vw; height: 49vw; }
+ 
+    /* ── FIX 5 — Reviews banner label alignment ─────────────── */
+
+    .reviews-page {
+        scroll-margin-top: 5vh;
+    }
+    .reviews-page::before, .reviews-page::after { display: none; }
+    .review-banner {
+        font-size: clamp(1.2rem, 4.5vw, 2.5rem);
+        letter-spacing: 3px;
+        padding-top: 6vw;
+        text-align: left;
+        margin-left: 6vw;       /* anchor to left so ::before sits flush */
+        width: auto;
+        justify-self: unset;
+    }
+    .review-banner::before {
+        font-size: 3vw;
+        width: auto;            /* matches main text width */
+        text-align: left;
+    }
+ 
+    /* ── FIX 6 — Reviews: wider gap, half-clipped sides, swipe  */
+    .review-container {
+        height: 40vh;
+        overflow: hidden;       /* clips the half-visible side cards */
+    }
+    /* Active card: centred, full size */
+    .review.active {
+        transform: translate(-50%, 0) translateX(0) scale(1);
+        opacity: 1;
+        z-index: 5;
+    }
+    /* Side cards: pushed further out so only ~half shows */
+    .review.left {
+        transform: translate(-50%, 0) translateX(-270px) scale(0.82);
+        opacity: 0.75;
+        z-index: 4;
+    }
+    .review.right {
+        transform: translate(-50%, 0) translateX(270px) scale(0.82);
+        opacity: 0.75;
+        z-index: 4;
+    }
+    /* Far cards hidden */
+    .review.far-left, .review.far-right { opacity: 0; pointer-events: none; }
+ 
+    .review { width: 72vw; max-width: 300px; height: 30vh;}
+    .review-title { font-size: 1.05rem; }
+    .review-text  { font-size: 0.95rem; }
+ 
+    .carousel-arrows { margin-top: -5vh; }
+    #get-started-now-button {
+        width: 50%;
+        font-size: 3.5vw;
+        padding: 3vw;
+        margin: 4vw auto 8vw auto;
+        display: block;
+        text-align: center;
+    }
+ 
+    .results-page { height: auto; min-height: unset; padding-bottom: 8vw; scroll-margin-top: 5vh;}
+    .results-page::before { display: none; }
+
+    .results-banner {
+        font-size: clamp(1.4rem, 5vw, 2.5rem);
+        margin-left: 6vw;
+        letter-spacing: 3px;
+        margin-bottom: 4vw;
+        padding-top: 6vw;
+    }
+    .results-banner::before { font-size: 3vw; }
+
+    /* Stack everything vertically on mobile */
+    .results-body {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0 6vw;
+        gap: 6vw;
+    }
+
+    .results-text {
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: static !important;
+        display: block !important;
+        
+    }
+
+    .results-text p {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+        padding: 4vw 5vw;
+        line-height: 1.6;
+        letter-spacing: 1px;
+    }
+
+    /* Stats as a 2x2 grid */
+    .results-data {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .results-data-square {
+        width: 100%;
+        height: 30vw;
+        border-right: 3px solid #d8d5cf;
+        border-bottom: 3px solid #d8d5cf;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: unset;
+    }
+
+    .results-data-square:nth-child(even) { border-right: none; }
+    .results-data-square:nth-child(3),
+    .results-data-square:nth-child(4) { border-bottom: none; }
+
+    .results-numbers { width: 100%; }
+    .results-pass-rate { font-size: clamp(1.2rem, 6vw, 2rem); margin-bottom: 1vw; }
+    .results-pass-rate-text { font-size: clamp(0.65rem, 2.8vw, 1rem); }
+    .results-triangle { display: none; }
+
+    .results-button {
+        display: none;
+    }
+    .results-button p { font-size: clamp(0.8rem, 3.5vw, 1rem); }
+
+    /* ── FIX 8 — Contact: subject+level inline, +/- positioned  */
+    .contact-page { flex-direction: column-reverse; scroll-margin-top: 3.5vh;}
+    .contact-page::before { display: none; }
+    
+
+    .contact-form-wrapper { width: 100%; border-top-right-radius: 30px; border-top-left-radius: 30px; padding: 6vw 6vw 10vw 6vw; box-sizing: border-box; }
+    .contact-banner { width: 100%; gap: 3vw; padding: 6vw; box-sizing: border-box; }
+    .contact-title { font-size: clamp(1.2rem, 4.5vw, 2rem); margin: 0 0 3vw 0; padding-top: 3vw; letter-spacing: 3px; }
+    .contact-title::before { font-size: 3vw; width: 100%; }
+    .contact-text { font-size: clamp(0.85rem, 2vw, 1rem); width: 100%; margin: 0; align-self: auto; }
+    .contact-form { margin: 0; width: 100%; }
+
+    .form-row { display: flex; flex-direction: column; width: 100%; }
+
+    .form-group { display: flex; flex-direction: column; width: 100%; margin-bottom: 3vw; }
+    .form-group label { margin: 0 0 1vw 0; }
+    .form-group input { width: 100%; margin: 0; box-sizing: border-box; }
+
+    .form-group-row { display: flex; flex-direction: row; align-items: center; gap: 2vw; width: 100%; position: relative; padding-right: 22vw; box-sizing: border-box; margin-bottom: 3vw; }
+    .subject-level-row { display: flex; flex-direction: row; gap: 2vw; }
+    .form-group-row select { width: 33vw; font-size: 0.85rem; padding: 2vw 1vw; box-sizing: border-box; }
+
+    .add-subject-btn { position: absolute; top: 50%; right: 10vw; left: auto; transform: translateY(-50%); width: 9vw; height: 9vw; }
+    .remove-subject-btn { position: absolute; top: 50%; right: 0; left: auto; transform: translateY(-50%); width: 9vw; height: 9vw; }
+    .add-subject-btn p, .remove-subject-btn p { font-size: 1.4rem; }
+
+    #additional-info { margin-left: 0; width: 100%; }
+    #additional-info label { position: relative; top: auto; left: auto; display: block; margin-bottom: 1vw; }
+    #additional-info textarea { width: 100%; box-sizing: border-box; }
+
+    .contact-submit { display: block; margin: 4vw auto 0 auto; padding: 3vw 15vw; font-size: 1rem; }
+
+
+    /* Subject+level on one row, +/- to their right */
+    #subjects-container { height: auto; margin-bottom: 4vw; }
+    .form-group-row {
+        display: flex;
+        flex-direction: row;    /* horizontal */
+        align-items: center;
+        gap: 2vw;
+        width: 100%;
+        position: relative;
+        padding-right: 20vw;    /* room for +/- buttons */
+        box-sizing: border-box;
+        margin-bottom: 2vw;
+    }
+    .subject-level-row {
+        display: flex;
+        flex-direction: row;
+        gap: 2vw;
+        flex-wrap: nowrap;
+    }
+    .form-group-row select,
+    .form-group-row .choose {
+        width: 30vw !important;
+        font-size: 0.85rem !important;
+        padding: 1.5vw 1vw !important;
+        box-sizing: border-box !important;
+        color: black !important;
+        background-color: white !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        text-align: center !important;
+        height: auto !important;
+        border-radius: 6px !important;
+        line-height: normal !important;
+        text-align: center !important;
+        text-align-last: center !important;
+    }
+ 
+    /* +/- buttons: absolute, stacked on right of row */
+    .add-subject-btn {
+        position: absolute;
+        top: 58%;
+        right: 8vw;
+        transform: translateY(-50%);
+        left: auto;
+        width: 8vw;
+        height: 8vw;
+    }
+    .remove-subject-btn {
+        position: absolute;
+        top: 58%;
+        right: -2%;
+        transform: translateY(-50%);
+        left: auto;
+        width: 8vw;
+        height: 8vw;
+    }
+    .add-subject-btn p, .remove-subject-btn p { font-size: 1.4rem; }
+ 
+    #additional-info { margin-left: 0; width: 100%; }
+    #additional-info label { position: relative; top: auto; left: auto; display: block; margin-bottom: 1vw; }
+    #additional-info textarea { width: 100%; box-sizing: border-box; }
+ 
+    /* ── FIX 9 — Submit centred ─────────────────────────────── */
+    .contact-submit {
+        display: block;
+        margin: 4vw auto 0 auto;
+        padding: 2.5vw 10vw;
+        font-size: 1rem;
+    }
+    .footer-wrapper { 
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 4vw;
+        gap: 4vw;
+    }
+
+    .footer-left { 
+        margin: 0;
+        gap: 0;
+        flex: 1;
+        min-width: 0;
+    }
+
+    #footer-arrow { width: clamp(100px, 35vw, 200px); height: 8vw }
+    #footer-svg-navbar { width: clamp(70px, 24vw, 150px); margin-top: 0.2vh;}
+
+    .footer-slogan {
+        position: relative;
+        display: inline-block;
+        margin-top: 2vw;
+    }
+    .footer-slogan::before {
+        content: "";
+        position: absolute;
+        top: 0; left: -2vw;
+        width: calc(100% + 6vw);
+        height: 100%;
+        opacity: 0.85;
+        border-radius: 6px;
+        z-index: 0;
+        clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+    }
+    .footer-slogan h1 {
+        font-size: clamp(1rem, 4vw, 1.6rem);
+        letter-spacing: 0.05rem;
+        position: relative;
+        z-index: 1;
+        padding: 1.5vw 8vw 1.5vw 1.5vw;
+        color: #e6e3df;
+    }
+
+    .footer-address { 
+        font-size: clamp(0.6rem, 2.5vw, 0.85rem); 
+        margin-top: 2vw; 
+        color: #e6e3df; 
+    }
+
+    .footer-social-media-icons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3vw;
+        margin: 2vw 0;
+    }
+    .footer-social-media-icons svg { width: 5vw !important; height: 5vw !important; }
+
+    .footer-right {
+        display: flex;
+        flex-direction: row;
+        gap: 4vw;
+        height: auto;
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .footer-sections,
+    .footer-social-media {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vw;
+        font-size: clamp(0.6rem, 2.2vw, 0.9rem);
+        letter-spacing: 0.5px;
+        margin: 0;
+        width: auto;
+    }
+}
