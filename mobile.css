@@ -54,9 +54,15 @@
 
 @media (max-width: 768px) {
 
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
     #mobile-island {
         display: flex;
         position: fixed;
+        order: 0;
         top: 2vh;
         left: 50%;
         transform: translateX(-50%);
@@ -101,7 +107,7 @@
         
     }
 
-    #mobile-nav { display: flex; }
+    #mobile-nav { display: flex; order: 0;}
  
     /* ── Global ─────────────────────────────────────────────── */
     body { overflow-x: hidden; }
@@ -111,30 +117,20 @@
     #navbar-blur { display: none; }
  
     /* ── Home ───────────────────────────────────────────────── */
-    .home-page { background-position: 65% center; height: 100vh; border-radius: 0; }
+    .home-page { background-position: 65% center; height: 80vh; border-radius: 0; order: 1}
     .home-page::after { display: none; }
     .title-menu-container {display: none;}
     #title-container { width: clamp(140px, 55vw, 240px); }
     .menu { display: none; }
-    .banner { margin: 33vh 0 0 6vw; }
+    .banner { margin: 25vh 0 0 6vw; }
     .banner::before { font-size: 4vw; letter-spacing: 5px; }
     .banner h1 { font-size: clamp(2.2rem, 11vw, 4rem); letter-spacing: 0.15rem; }
     .book-now-button { margin: 10vh 0 0 6vw; }
     .book-now-button p { font-size: 1.2rem; }
  
     /* ── FIX 2 — About boxes: compact, text fills space ─────── */
-    .about-page {
-        opacity: 0;
-        transform: translateY(40px);
-        visibility: hidden;
-        transition: opacity 0.3s ease, transform 0.8s ease, visibility 0.8s ease;
-    }
 
-    .about-page.about-visible {
-        opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
-    }
+    .about-page {order: 3;}
     .about-page::after, .about-page::before { display: none; }
     .about-banner { font-size: clamp(1.3rem, 6vw, 2.5rem); margin-left: 6vw; padding-top: 8vh; letter-spacing: 2px; }
     .about-banner::before { font-size: 4vw; }
@@ -218,6 +214,7 @@
     .services-page {
         display: flex;
         flex-direction: column;
+        order: 4;
     }
     .service-top {
         order: 2;
@@ -362,7 +359,7 @@
     }
  
     /* ── FIX 4 — Tutors: text above, carousel 2.5 cards tall ── */
-    .tutors-page { height: auto; min-height: unset; scroll-margin-top: 4vh;}
+    .tutors-page { height: auto; min-height: unset; scroll-margin-top: 4vh; order: 5;}
     .tutors-page::after { display: none; }
     .tutor-body {
         flex-direction: column-reverse; /* text first (top), carousel second */
@@ -393,6 +390,7 @@
 
     .reviews-page {
         scroll-margin-top: 5vh;
+        order: 6;
     }
     .reviews-page::before, .reviews-page::after { display: none; }
     .review-banner {
@@ -449,7 +447,7 @@
         text-align: center;
     }
  
-    .results-page { height: auto; min-height: unset; padding-bottom: 8vw; scroll-margin-top: 5vh;}
+    .results-page { height: auto; min-height: unset; padding-bottom: 8vw; scroll-margin-top: 5vh; order: 7;}
     .results-page::before { display: none; }
 
     .results-banner {
@@ -528,12 +526,13 @@
     .results-button p { font-size: clamp(0.8rem, 3.5vw, 1rem); }
 
     /* ── FIX 8 — Contact: subject+level inline, +/- positioned  */
-    .contact-page { flex-direction: column-reverse; scroll-margin-top: 3.5vh;}
+    .contact-page { flex-direction: column-reverse; scroll-margin-top: 3.5vh; order: 2; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
     .contact-page::before { display: none; }
     
 
-    .contact-form-wrapper { width: 100%; border-top-right-radius: 30px; border-top-left-radius: 30px; padding: 6vw 6vw 10vw 6vw; box-sizing: border-box; }
-    .contact-banner { width: 100%; gap: 3vw; padding: 6vw; box-sizing: border-box; }
+    .contact-form-wrapper { width: 100%; border-radius: 0; padding: 6vw 6vw 10vw 6vw; box-sizing: border-box; background-color: #e6e3df; transition: background-color 0.5s ease;}
+    .contact-form-wrapper.contact-visible {background-color: #c8d1d9}
+    .contact-banner { width: 100%; gap: 3vw; padding: 6vw; box-sizing: border-box; display: none;}
     .contact-title { font-size: clamp(1.2rem, 4.5vw, 2rem); margin: 0 0 3vw 0; padding-top: 3vw; letter-spacing: 3px; }
     .contact-title::before { font-size: 3vw; width: 100%; }
     .contact-text { font-size: clamp(0.85rem, 2vw, 1rem); width: 100%; margin: 0; align-self: auto; }
@@ -628,6 +627,10 @@
         margin: 4vw auto 0 auto;
         padding: 2.5vw 10vw;
         font-size: 1rem;
+    }
+
+    .footer {
+        order: 8;
     }
     .footer-wrapper { 
         flex-direction: row;

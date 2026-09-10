@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //nobile-about-page-scroll
-const aboutPage = document.querySelector('.about-page');
+const contactPage = document.querySelector('.contact-form-wrapper');
 
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 0) {
-        aboutPage.classList.add('about-visible');
+    if (window.scrollY > 300) {
+        contactPage.classList.add('contact-visible');
     }
 });
 
