@@ -2,20 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    //Navbar
-    const navbar = document.getElementById('navbar');
-    const navbarBlur = document.getElementById('navbar-blur');
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 150) {
-            navbar.classList.add('navbar-visible');
-            navbarBlur.style.opacity = '1';
-        } else {
-            navbar.classList.remove('navbar-visible');
-            navbarBlur.style.opacity = '0';
-        }
-    });
-
 
     //nobile-about-page-scroll
 const contactPage = document.querySelector('.contact-form-wrapper');
@@ -91,11 +77,12 @@ window.addEventListener('scroll', () => {
 
 
     //subject-form
-    const subjectSelect = document.getElementById('subject-select');
-    const levelSelect = document.getElementById('level-select');
-
-    const titleEl = document.querySelector('.subject-title p');
-    const textEl = document.querySelector('.subject-text');
+    const subjectPills = [...document.querySelectorAll('[data-subject]')];
+    const levelPills = [...document.querySelectorAll('[data-level]')];
+    const infoCard = document.querySelector('.subject-info');
+    const titleEl = document.getElementById('subject-title');
+    const textEl = document.getElementById('subject-text');
+    const tagEl = document.getElementById('subject-tag');
 
     const defaultTitle = 'What we Offer';
     const defaultText = `
@@ -194,46 +181,82 @@ window.addEventListener('scroll', () => {
 
 
 
-subjectSelect.addEventListener('change', updateSubjectInfo);
-levelSelect.addEventListener('change', updateSubjectInfo);
+if (infoCard && titleEl && textEl) {
 
+    let subject = '';
+    let level = '';
 
-function updateSubjectInfo() {
-  const subject = subjectSelect.value;
-  const level = levelSelect.value;
-  const buttonHTML = document.querySelector('.subject-button').outerHTML;
+    const labelOf = (pills, attr, value) => {
+        const p = pills.find(x => x.dataset[attr] === value);
+        return p ? p.textContent.trim() : '';
+    };
 
-  // Filter level options
-  const selectedOption = subjectSelect.options[subjectSelect.selectedIndex];
-  const allowedLevels = selectedOption.dataset.levels;
-  Array.from(levelSelect.options).forEach(opt => {
-    if (!allowedLevels || allowedLevels.split(',').includes(opt.value) || opt.value === '') {
-      opt.hidden = false;
-    } else {
-      opt.hidden = true;
-      if (levelSelect.value === opt.value) levelSelect.value = '';
+    function updateSubjectInfo() {
+        const match = content[level] && content[level][subject];
+        let title = defaultTitle;
+        let text = defaultText;
+        let tag = '';
+
+        if (match) {
+            title = match.title;
+            text = match.text;
+            tag = labelOf(levelPills, 'level', level) + ' \u00b7 ' + labelOf(subjectPills, 'subject', subject);
+        } else if (subject) {
+            title = labelOf(subjectPills, 'subject', subject);
+            text = '<p>Now choose a level to see what we cover.</p>';
+        } else if (level) {
+            title = labelOf(levelPills, 'level', level);
+            text = '<p>Now choose a subject to see what we cover.</p>';
+        }
+
+        infoCard.classList.add('swap');
+        setTimeout(() => {
+            titleEl.textContent = title;
+            textEl.innerHTML = text;
+            if (tagEl) {
+                tagEl.textContent = tag;
+                tagEl.hidden = !tag;
+            }
+            infoCard.classList.remove('swap');
+        }, 160);
     }
-  });
 
-  // Adjust title font size for long names
-  const longTitles = ['mathsapps', 'engineeringscience'];
-  titleEl.style.fontSize = longTitles.includes(subject) ? '1.8rem' : '2.8rem';
+    function syncPills() {
+        const current = subjectPills.find(p => p.dataset.subject === subject);
+        const allowed = current && current.dataset.levels ? current.dataset.levels.split(',') : null;
 
-  // Update content
-  if (content[level] && content[level][subject]) {
-    const match = content[level][subject];
-    titleEl.textContent = match.title;
-    textEl.innerHTML = match.text + buttonHTML;
-  } else {
-    titleEl.textContent = defaultTitle;
-    textEl.innerHTML = defaultText + buttonHTML;
-  }
+        levelPills.forEach(p => {
+            const blocked = !!allowed && !allowed.includes(p.dataset.level);
+            p.classList.toggle('disabled', blocked);
+            p.setAttribute('aria-disabled', String(blocked));
+            if (blocked && level === p.dataset.level) level = '';
+        });
+
+        subjectPills.forEach(p => {
+            const on = p.dataset.subject === subject;
+            p.classList.toggle('active', on);
+            p.setAttribute('aria-pressed', String(on));
+        });
+        levelPills.forEach(p => {
+            const on = p.dataset.level === level;
+            p.classList.toggle('active', on);
+            p.setAttribute('aria-pressed', String(on));
+        });
+    }
+
+    subjectPills.forEach(p => p.addEventListener('click', () => {
+        subject = subject === p.dataset.subject ? '' : p.dataset.subject;
+        syncPills();
+        updateSubjectInfo();
+    }));
+
+    levelPills.forEach(p => p.addEventListener('click', () => {
+        if (p.classList.contains('disabled')) return;
+        level = level === p.dataset.level ? '' : p.dataset.level;
+        syncPills();
+        updateSubjectInfo();
+    }));
 }
-
-subjectSelect.addEventListener('change', updateSubjectInfo);
-levelSelect.addEventListener('change', updateSubjectInfo);
-
-
 
     //Contact form
     const subjectsContainer = document.getElementById('subjects-container');
@@ -383,18 +406,6 @@ levelSelect.addEventListener('change', updateSubjectInfo);
 
 
 
-    //mobile services scrollbar 
-    const container = document.querySelector('.services-container');
-    const thumb = document.getElementById('services-thumb');
-
-    container.addEventListener('scroll', () => {
-        const scrolled = container.scrollLeft;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-        const percent = (scrolled / maxScroll) * 100;
-        thumb.style.left = `calc(${percent}% - 6px)`;
-    });
-
-
     //mobile about boxes
     const aboutTrack = document.querySelector('.about-track');
     const aboutDots = document.querySelectorAll('.about-dot');
@@ -417,3 +428,312 @@ levelSelect.addEventListener('change', updateSubjectInfo);
             }
         }, { passive: true });
     }
+
+
+// tutor "Request" buttons: pre-fill the enquiry form with the chosen tutor
+(function () {
+    const info = document.getElementById('info');
+    if (!info) return;
+
+    document.querySelectorAll('.tutor-cta').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const note = "I'd like to request " + btn.dataset.tutor + " as my tutor.";
+            // only fill the box if it's empty or still holds our own earlier text
+            if (!info.value.trim() || info.value === info.dataset.auto) {
+                info.value = note;
+                info.dataset.auto = note;
+            }
+        });
+    });
+});
+
+    (function () {
+        const stage = document.getElementById('rv-stage');
+        const grid = document.getElementById('rv-grid');
+        if (!stage || !grid) return;
+ 
+        const cards = [...grid.querySelectorAll('.rv-card')];
+        const prev = document.getElementById('rv-prev');
+        const next = document.getElementById('rv-next');
+        const count = document.getElementById('rv-count');
+        const dotsBox = document.getElementById('rv-dots');
+        const empty = document.getElementById('rv-empty');
+        const emptyTitle = document.getElementById('rv-empty-title');
+        const pills = [...document.querySelectorAll('[data-filter]')];
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ 
+        let filter = 'all';
+        let page = 0;
+        let size = 3;
+ 
+        // cards per row: 3 on desktop, 2 on tablet, 1 on phone
+        function perRow() {
+            const w = window.innerWidth;
+            return w >= 760 ? 3 : (w >= 520 ? 2 : 1);
+        }
+ 
+        function pool() {
+            return cards.filter(c => filter === 'all' || c.dataset.subject === filter);
+        }
+ 
+        function pageCount(n) {
+            return Math.max(1, Math.ceil(n / size));
+        }
+ 
+        // the last row always shows the final cards, so it is never half empty
+        function startOf(p, n) {
+            return Math.max(0, Math.min(p * size, n - size));
+        }
+ 
+        function render(dir) {
+            const list = pool();
+            const n = list.length;
+            const pages = pageCount(n);
+            page = Math.min(page, pages - 1);
+            const start = startOf(page, n);
+            const end = Math.min(n, start + size);
+ 
+            grid.style.setProperty('--cols', size);
+            cards.forEach(c => { c.hidden = true; });
+            list.slice(start, end).forEach(c => { c.hidden = false; });
+ 
+            // no reviews for this subject yet
+            empty.hidden = n !== 0;
+            grid.hidden = n === 0;
+            if (n === 0) {
+                const active = document.querySelector('[data-filter][aria-pressed="true"]');
+                emptyTitle.textContent = 'No ' + active.textContent + ' reviews yet';
+            }
+ 
+            if (n === 0) {
+                count.textContent = 'No reviews for this subject yet';
+            } else if (n <= size) {
+                count.textContent = 'Showing all ' + n + (n === 1 ? ' review' : ' reviews');
+            } else if (start + 1 === end) {
+                count.textContent = 'Showing ' + end + ' of ' + n + ' reviews';
+            } else {
+                count.textContent = 'Showing ' + (start + 1) + '\u2013' + end + ' of ' + n + ' reviews';
+            }
+ 
+            prev.disabled = page <= 0;
+            next.disabled = page >= pages - 1;
+ 
+            // dots: one per row of cards
+            dotsBox.innerHTML = '';
+            if (pages > 1) {
+                for (let i = 0; i < pages; i++) {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'rv-dot';
+                    dot.setAttribute('aria-label', 'Go to row ' + (i + 1));
+                    if (i === page) dot.setAttribute('aria-current', 'true');
+                    dot.addEventListener('click', () => go(i));
+                    dotsBox.appendChild(dot);
+                }
+            }
+ 
+            if (dir && !reduceMotion && grid.animate) {
+                grid.animate(
+                    [{ opacity: 0, transform: 'translateX(' + (dir * 48) + 'px)' }, { opacity: 1, transform: 'none' }],
+                    { duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)' }
+                );
+            }
+        }
+ 
+        function go(p) {
+            const pages = pageCount(pool().length);
+            p = Math.max(0, Math.min(pages - 1, p));
+            if (p === page) return;
+            const dir = p > page ? 1 : -1;
+            page = p;
+            render(dir);
+        }
+ 
+        prev.addEventListener('click', () => go(page - 1));
+        next.addEventListener('click', () => go(page + 1));
+ 
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(o => o.setAttribute('aria-pressed', String(o === pill)));
+                filter = pill.dataset.filter;
+                page = 0;
+                render(0);
+            });
+        });
+ 
+        // swipe or drag sideways to turn the row
+        let startX = 0;
+        let startY = 0;
+        let tracking = false;
+        let suppress = false;
+ 
+        stage.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('button, a')) return;
+            tracking = true;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+ 
+        stage.addEventListener('pointerup', (e) => {
+            if (!tracking) return;
+            tracking = false;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            if (Math.abs(dx) > 10) {
+                suppress = true;                  // a drag shouldn't count as a click on a card
+                setTimeout(() => { suppress = false; }, 0);
+            }
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+                go(page + (dx < 0 ? 1 : -1));
+            }
+        });
+ 
+        stage.addEventListener('pointercancel', () => { tracking = false; });
+ 
+        stage.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') go(page + 1);
+            if (e.key === 'ArrowLeft') go(page - 1);
+        });
+ 
+        // full review pop-up
+        const modal = document.getElementById('rv-modal');
+        const modalCard = document.getElementById('rv-modal-card');
+        const modalBody = document.getElementById('rv-modal-body');
+        const closeBtn = document.getElementById('rv-close');
+        let lastFocus = null;
+ 
+        function openModal(card) {
+            lastFocus = document.activeElement;
+            modalBody.innerHTML = '';
+ 
+            const text = document.createElement('p');
+            text.className = 'rv-modal-text';
+            text.textContent = card.querySelector('.rv-text').textContent;
+ 
+            modalBody.appendChild(card.querySelector('.rv-stars').cloneNode(true));
+            modalBody.appendChild(text);
+            modalBody.appendChild(card.querySelector('.rv-foot').cloneNode(true));
+ 
+            modalCard.classList.toggle('sample', card.classList.contains('sample'));
+            modalCard.scrollTop = 0;
+            modal.hidden = false;
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+ 
+        function closeModal() {
+            modal.hidden = true;
+            document.body.style.overflow = '';
+            if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+ 
+        grid.addEventListener('click', (e) => {
+            const card = e.target.closest('.rv-card');
+            if (!card || suppress) return;
+            openModal(card);
+        });
+ 
+        closeBtn.addEventListener('click', closeModal);
+ 
+        modal.addEventListener('click', (e) => {
+            if (e.target.hasAttribute('data-close')) closeModal();
+        });
+ 
+        document.addEventListener('keydown', (e) => {
+            if (modal.hidden) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Tab') {                // keeps focus inside the pop-up
+                e.preventDefault();
+                closeBtn.focus();
+            }
+        });
+ 
+        window.addEventListener('resize', () => {
+            const s = perRow();
+            if (s !== size) {
+                size = s;
+                render(0);
+            }
+        });
+ 
+        size = perRow();
+        render(0);
+    })();
+
+    // Results section: count the stats up from 0 when they scroll into view
+(function () {
+    const wrap = document.getElementById('results-stats');
+    if (!wrap) return;
+
+    const stats = [...wrap.querySelectorAll('.results-stat')];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = 2200;                    // ms
+    const STAGGER = 150;                      // ms between cards
+
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+    function format(n) {
+        return Math.round(n).toLocaleString('en-GB');
+    }
+
+    function paint(stat, progress) {
+        const el = stat.querySelector('.results-value');
+        const target = Number(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        el.textContent = format(target * progress) + suffix;
+        stat.style.setProperty('--p', progress);
+    }
+
+    function run(stat, delay) {
+        const start = performance.now() + delay;
+
+        function frame(now) {
+            if (now < start) { requestAnimationFrame(frame); return; }
+            const t = Math.min((now - start) / DURATION, 1);
+            paint(stat, easeOutCubic(t));
+            if (t < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+    }
+
+    // no animation wanted: leave the final numbers (already in the HTML) and fill the bars
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+        stats.forEach(s => paint(s, 1));
+        return;
+    }
+
+    // start everything at 0 (the HTML holds the final numbers as a no-JS fallback)
+    stats.forEach(s => paint(s, 0));
+
+    let played = false;
+    const io = new IntersectionObserver((entries) => {
+        if (played || !entries.some(e => e.isIntersecting)) return;
+        played = true;                        // only count up the first time
+        stats.forEach((s, i) => run(s, i * STAGGER));
+        io.disconnect();
+    }, { threshold: 0.35 });
+
+    io.observe(wrap);
+})();
+ 
+
+const tutorCards = document.querySelectorAll('.tutor-card');
+
+function closeTutorCards() {
+    tutorCards.forEach(c => c.classList.remove('is-open'));
+}
+
+tutorCards.forEach(card => {
+    card.addEventListener('click', e => {
+        if (e.target.closest('.tutor-cta')) return;   // let the Request link work normally
+        const wasOpen = card.classList.contains('is-open');
+        closeTutorCards();
+        if (!wasOpen) card.classList.add('is-open');
+    });
+});
+
+// tapping anywhere outside a card closes it and restarts the carousel
+document.addEventListener('click', e => {
+    if (!e.target.closest('.tutor-card')) closeTutorCards();
+});
+
