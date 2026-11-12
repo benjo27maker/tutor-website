@@ -1,17 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 
-
-
-    //nobile-about-page-scroll
-const contactPage = document.querySelector('.contact-form-wrapper');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        contactPage.classList.add('contact-visible');
-    }
-});
-
     //navbar mobile
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobile-nav');
@@ -258,109 +247,66 @@ if (infoCard && titleEl && textEl) {
     }));
 }
 
-    //Contact form
-    const subjectsContainer = document.getElementById('subjects-container');
+       //Contact forms (page form + pop-up form)
     const MAX_SUBJECTS = 3;
 
-    function updateRemoveButtons() {
-        const rows = subjectsContainer.querySelectorAll('.form-group-row');
-        rows.forEach((row, index) => {
-            const removeBtn = row.querySelector('.remove-subject-btn');
-            const isLastRow = index === rows.length - 1;
-            const isOnlyRow = rows.length === 1;
-            removeBtn.style.display = (isLastRow && !isOnlyRow) ? 'inline-block' : 'none';
-        });
-    }
+    document.querySelectorAll('[id="subjects-container"]').forEach(box => {
 
-    function updateAddButtons() {
-        const rows = subjectsContainer.querySelectorAll('.form-group-row');
-        rows.forEach((row, index) => {
-            const addBtn = row.querySelector('.add-subject-btn');
-            const isLastRow = index === rows.length - 1;
-            const belowMax = rows.length < MAX_SUBJECTS;
-            addBtn.style.display = (isLastRow && belowMax) ? 'inline-block' : 'none';
-        });
-    }
+        function refresh() {
+            const rows = box.querySelectorAll('.form-group-row');
+            rows.forEach((row, i) => {
+                const last = i === rows.length - 1;
+                row.querySelector('.remove-subject-btn').style.display =
+                    (last && rows.length > 1) ? 'inline-block' : 'none';
+                row.querySelector('.add-subject-btn').style.display =
+                    (last && rows.length < MAX_SUBJECTS) ? 'inline-block' : 'none';
+            });
+        }
 
-    if (subjectsContainer) {
-        subjectsContainer.addEventListener('click', (e) => {
+        box.addEventListener('click', (e) => {
             if (e.target.closest('.add-subject-btn')) {
-                const rows = subjectsContainer.querySelectorAll('.form-group-row');
+                const rows = box.querySelectorAll('.form-group-row');
                 if (rows.length >= MAX_SUBJECTS) return;
-
-                const firstRow = subjectsContainer.querySelector('.form-group-row');
-                const newRow = firstRow.cloneNode(true);
-
-                newRow.querySelectorAll('select').forEach(select => {
-                    select.selectedIndex = 0;
-                });
-
-                subjectsContainer.appendChild(newRow);
-                updateRemoveButtons();
-                updateAddButtons();
+                const newRow = rows[0].cloneNode(true);
+                newRow.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+                box.appendChild(newRow);
             }
-
             if (e.target.closest('.remove-subject-btn')) {
                 e.target.closest('.form-group-row').remove();
-                updateRemoveButtons();
-                updateAddButtons();
             }
+            refresh();
         });
 
-        updateRemoveButtons();
-        updateAddButtons();
-    }
+        refresh();
+    });
 
-    // Form submission and redirect
-    const contactForm = document.querySelector('.contact-form');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-
-            // Stop Formspree from controlling the page redirect
+    document.querySelectorAll('.contact-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const submitButton = contactForm.querySelector('.contact-submit');
-
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-
-            const formData = new FormData(contactForm);
+            const btn = form.querySelector('.contact-submit');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
 
             try {
-
-                const response = await fetch(contactForm.action, {
+                const res = await fetch(form.action, {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
                 });
 
-                if (response.ok) {
+                if (!res.ok) throw new Error('Form submission failed');
 
-                    // Formspree accepted the submission
-                    window.location.href = 'https://upgrade-tutors.com/thank-you.html';
+                window.location.href = 'https://upgrade-tutors.com/thank-you.html';
 
-                } else {
-
-                    throw new Error('Form submission failed');
-
-                }
-
-            } catch (error) {
-
-                console.error(error);
-
-                submitButton.disabled = false;
-                submitButton.textContent = 'Submit';
-
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false;
+                btn.textContent = 'Send my enquiry';
                 alert('There was a problem sending your enquiry. Please try again.');
-
             }
         });
-    }
-
+    });
 
     //review section
     const container = document.querySelector('.review-container');
@@ -737,3 +683,66 @@ document.addEventListener('click', e => {
     if (!e.target.closest('.tutor-card')) closeTutorCards();
 });
 
+(function () {
+    // Pages that exist. Add a slug here when you create a new subject page.
+    var PAGES = [
+        'nat-5-maths',
+        'higher-maths',
+        'advanced-higher-maths',
+        'nat-5-physics',
+        'higher-physics',
+        'advanced-higher-physics',
+        'nat-5-chemistry',
+        'higher-chemistry',
+        'advanced-higher-chemistry',
+        'nat-5-maths-applications',
+        'higher-maths-applications',
+        'nat-5-biology',
+        'higher-biology',
+        'advanced-higher-biology',
+        'nat-5-engineering-science',
+        'higher-engineering-science',
+        'advanced-higher-engineering-science'
+    ];
+    var EXT = '.html'; // set to '' if your live URLs have no extension
+ 
+    // data-subject value -> slug fragment (only where they differ)
+    var SUBJECT_SLUG = { engineeringscience: 'engineering-science', mathsapps: 'maths-applications' };
+ 
+    var LEVEL_SLUG = { nat5: 'nat-5', higher: 'higher', advancedhigher: 'advanced-higher' };
+    var LEVEL_NAME = { nat5: 'Nat 5', higher: 'Higher', advancedhigher: 'Advanced Higher' };
+ 
+    function init() {
+        var btn = document.getElementById('subject-page-btn');
+        var pills = document.querySelectorAll('.subject-picker .pill');
+        if (!btn || !pills.length) return;
+ 
+        function selected(attr) {
+            return document.querySelector('.subject-picker .pill[aria-pressed="true"][' + attr + ']');
+        }
+ 
+        function update() {
+            var s = selected('data-subject');
+            var l = selected('data-level');
+            if (!s || !l) { btn.style.display = 'none'; return; }
+ 
+            var slug = LEVEL_SLUG[l.getAttribute('data-level')] + '-' + (SUBJECT_SLUG[s.getAttribute('data-subject')] || s.getAttribute('data-subject'));
+            if (PAGES.indexOf(slug) === -1) { btn.style.display = 'none'; return; }
+ 
+            btn.href = slug + EXT;
+            btn.textContent = 'View ' + LEVEL_NAME[l.getAttribute('data-level')] + ' ' + s.textContent.trim() + ' page \u2192';
+            btn.style.display = '';
+        }
+ 
+        // Watches the aria-pressed changes your existing pill code already makes,
+        // so it works regardless of which script runs first.
+        var obs = new MutationObserver(update);
+        pills.forEach(function (p) {
+            obs.observe(p, { attributes: true, attributeFilter: ['aria-pressed'] });
+        });
+        update();
+    }
+ 
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+})();

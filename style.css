@@ -4,6 +4,19 @@ html, body, h1, h2, h3, h4, h5, h6, p {
     padding: 0;
 }
 
+:root {
+    --amber: #f3af52;
+    --amber-soft: #f6c27e;
+    --amber-deep: #a8660c;
+    --amber-text: #b8690f;
+    --bark: #3f3a2f;
+    --bark-deep: #2f2b24;
+    --body: #5a5446;
+    --paper: #f5f3f1;
+    --stone: #e7e4e0;
+    --card: #fffdfa;
+}
+
 body {
     background-color: #e6e3df;
 }
@@ -1170,6 +1183,16 @@ a {
     opacity: 0;
     transform: translateY(8px);
 }
+
+.subject-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+#subject-page-btn {
+    margin-top: 1rem;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     .service-tile,
@@ -2665,6 +2688,119 @@ a {
     margin: -.4rem 0 0;
     font-size: .88rem;
     color: var(--mut);
+}
+
+
+/* ---------- contact pop-up ---------- */
+#contact-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+    background: rgba(20, 18, 14, .55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s;
+}
+
+#contact-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.contact-modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    max-height: 92vh;
+    overflow-y: auto;
+    border-radius: 28px;
+    transform: translateY(24px) scale(.97);
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+    font-family: Inter, sans-serif;
+}
+
+#contact-modal.open .contact-modal-dialog {
+    transform: none;
+}
+
+.contact-modal-dialog .contact-form-wrapper {
+    margin: 0;
+}
+
+/* the card needs the same box-sizing the section used to give it */
+.contact-modal-dialog,
+.contact-modal-dialog * ,
+.contact-modal-dialog *::before,
+.contact-modal-dialog *::after {
+    box-sizing: border-box;
+}
+
+.contact-modal-close {
+    position: sticky;
+    top: .8rem;
+    float: right;
+    z-index: 5;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin: .8rem .8rem -3.4rem 0;
+    border: 2px solid rgba(241, 239, 236, .35);
+    border-radius: 50%;
+    background: rgba(47, 43, 36, .9);
+    color: #f1efec;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.contact-modal-close:hover {
+    background: #f3af52;
+    border-color: #f3af52;
+    color: #252525;
+    --amber: #f3af52;
+    z-index: 9999; 
+}
+
+
+.open-contact-btn {
+    padding: .9rem 2rem;
+    border: 0;
+    border-radius: 12px;
+    background: #f3af52;
+    color: #252525;
+    font: 600 1.05rem InclusiveSans, sans-serif;
+    cursor: pointer;
+    transition: .25s;
+    margin-top: 3vh;
+}
+
+.open-contact-btn:hover {
+    transform: translateY(-3px);
+}
+
+/* submit */
+.contact-submit {
+    justify-self: start;
+    padding: 1rem 2.2rem;
+    border: 0;
+    border-radius: 12px;
+    background: var(--amber);
+    color: #252525;
+    font: 600 1.1rem InclusiveSans, sans-serif;
+    letter-spacing: .04em;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(243, 175, 82, .35);
+    transition: .25s;
+}
+
+.contact-submit:hover {
+    transform: translateY(-3px);
 }
 
 /* ---------- tablet / mobile ---------- */

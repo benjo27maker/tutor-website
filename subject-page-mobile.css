@@ -1,0 +1,286 @@
+/* subject-page-mobile.css - phones / small tablets (<= 768px).
+   Loaded AFTER subject-page-style.css, so these rules win. Desktop untouched. */
+
+/* mobile-only extras: hidden on desktop, shown inside the media query below */
+.sp-course-dots, .sp-course-cta { display: none; }
+
+@media (max-width: 768px) {
+
+    html, body { overflow-x: clip; }
+
+    /* desktop sets height:5vh on tiles, which squashes them - keep them square */
+    .sp-tile { height: auto; width: 3.4rem; }
+
+    /* ===== HERO: compact, content sits right under the back link ===== */
+/* ===== HERO ===== */
+
+.sp-hero::before {
+    background: linear-gradient(180deg,
+        rgba(37, 33, 26, 0.6) 0%,
+        rgba(37, 33, 26, 0.82) 60%,
+        rgba(37, 33, 26, 0.94) 100%);
+}
+
+.sp-back {
+    top: calc(env(safe-area-inset-top, 0px) + 16px);
+    left: 6vw;
+    font-size: 0.9rem;
+}
+
+/* ===== MOBILE HERO ===== */
+
+.sp-hero {
+    height: 100svh !important;
+    min-height: 100svh !important;
+    position: relative;
+}
+
+.sp-hero-inner {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    padding: calc(env(safe-area-inset-top, 0px) + 64px) 6vw 36px !important;
+    box-sizing: border-box;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center; !important;
+    align-items: stretch !important;
+}
+
+
+.sp-hero-lower {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 3vh;
+    padding: 0 !important;
+    gap: 0 !important;
+}
+
+.sp-hero-upper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    flex: 0 0 auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    margin-top: 5vh;
+
+}
+
+/* Upper group */
+.sp-hero .sp-eyebrow {
+    margin: 0 0 0.9rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+}
+
+.sp-hero .sp-eyebrow::before {
+    width: 1.6rem;
+}
+
+.sp-hero h1 {
+    font-size: clamp(2.3rem, 11vw, 3.1rem);
+    line-height: 1.08;
+}
+
+/* Lower group */
+.sp-intro {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: none;
+}
+
+.sp-hero .sp-btn {
+    align-self: stretch;
+    margin-top: 1.5rem;
+    min-height: 3.2rem;
+    text-align: center;
+}
+
+
+    /* ===== SECTION SPACING + HEADINGS ===== */
+    .sp-course, .sp-lessons, .sp-reviews, .sp-faq, .sp-cta-wrap, .sp-related {
+        padding-top: 8vh;
+        padding-bottom: 8vh;
+    }
+
+    .sp-head, .sp-lessons .sp-head { margin: 0 6vw 4vh; }
+    .sp-h2 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+    .sp-eyebrow { letter-spacing: 0.16em; }
+    .sp-lede { font-size: 1rem; }
+
+    /* ===== COURSE: swipe sideways, next card peeks in ===== */
+    .sp-course-grid {
+        display: flex;
+        gap: 14px;
+        margin: 0;
+        padding: 8px 6vw 24px;
+        scroll-padding: 0 6vw;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .sp-course-grid::-webkit-scrollbar { display: none; }
+    .sp-course-grid::after { content: ""; flex: 0 0 6px; }   /* last card can scroll fully into view */
+
+    .sp-box {
+        flex: 0 0 min(82%, 360px);
+        scroll-snap-align: start;
+        scroll-snap-stop: always;     /* a hard swipe can't skip a card */
+        padding: 1.4rem;
+    }
+
+    /* position indicator under the swipe row */
+    .sp-course-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sp-course-dot {
+        position: relative;
+        width: 8px;
+        height: 8px;
+        padding: 0;
+        border: 0;
+        border-radius: 99px;
+        background: rgba(63, 58, 47, 0.25);
+        cursor: pointer;
+        transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .sp-course-dot::after { content: ""; position: absolute; inset: -14px -6px; }   /* bigger invisible tap area */
+    .sp-course-dot.active { width: 26px; background: #f3af52; }
+
+    /* extra call-to-action under the course cards */
+    .sp-course-cta { display: block; margin: 2rem 6vw 0; }
+    .sp-course-cta .sp-btn { display: block; width: 100%; min-height: 3.2rem; text-align: center; }
+
+    .sp-box h3 { font-size: 1.25rem; }
+    .sp-box > p { font-size: 0.95rem; }
+
+    /* ===== LESSONS ===== */
+    .sp-lessons-body { margin: 0 6vw; }
+    .sp-chip { padding: 1rem; }
+    .sp-lead { font-size: 1.1rem; }
+
+    /* ===== REVIEWS ===== */
+    .sp-panel { margin: 0 4vw; padding: 1rem; }
+    .sp-rv { padding: 1.2rem; }
+    .sp-rv-bottom { flex-direction: column; gap: 1rem; }
+    .sp-rv-arrow { width: 3rem; height: 3rem; }
+    .sp-reviews-cta { margin: 4vh 6vw 0; }
+    .sp-reviews-cta .sp-btn { width: 100%; text-align: center; }
+    .sp-rv-modal { padding: 1rem; }
+
+    /* ===== FAQS ===== */
+    .sp-faq-list { margin: 0 6vw; }
+    .sp-faq summary { padding: 1.1rem 0; }
+
+    /* ===== CLOSING BANNER ===== */
+    .sp-cta { margin: 0 4vw; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .sp-cta .open-contact-btn { width: 100%; min-height: 3rem; }
+
+    /* ===== RELATED SUBJECTS ===== */
+    .sp-related-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin: 0 6vw; }
+    .sp-related-all { margin: 4vh 6vw 0; }
+    .sp-related-all .sp-btn { display: block; text-align: center; }
+
+    /* ===== CONTACT POP-UP ===== */
+    #contact-modal { padding: 2vh 3vw; }
+    .contact-modal-dialog { max-height: 96vh; border-radius: 22px; }
+    .contact-form-wrapper { border-radius: 22px; }
+
+    /* 16px stops iPhones zooming in when a field is tapped */
+    .contact-form input, .contact-form select, .contact-form textarea { font-size: 16px; }
+
+    /* ===== FOOTER: links on top, brand block underneath ===== */
+    .footer, .footer-wrapper { min-height: 0; height: auto; }
+
+    .footer-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 6vh 6vw 3vh;
+        gap: 5vh;
+    }
+
+    /* link columns first */
+    .footer-right {
+        order: -1;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding-bottom: 4vh;
+        border-bottom: 1px solid rgba(230, 227, 223, 0.2);
+        justify-content: space-around;
+        gap: 6vw;
+    }
+
+    .footer-sections, .footer-social-media {
+        margin: 0;
+        gap: 14px;
+        font-size: 0.95rem;
+        letter-spacing: 1.2px;
+    }
+
+    .footer-sections a, .footer-social-media a { padding: 2px 0; }   /* easier taps */
+
+    /* brand block: logo + slogan side by side, address, then icons */
+    .footer-left {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "logo    slogan"
+            "address address"
+            "icons   icons";
+        align-items: center;
+        column-gap: 4vw;
+        row-gap: 2.5vh;
+        margin: 0;
+        width: 100%;
+    }
+
+    .footer-logo { grid-area: logo; width: auto; height: auto; display: flex; }
+    .footer-logo-inner { width: 36vw; height: 13.2vw; align-items: center; }   /* keeps the arrow's 712:222 shape */
+    #footer-svg-navbar { width: 23vw; margin-right: 3.5vw; }
+
+    .footer-slogan { grid-area: slogan; }
+    .footer-slogan p { margin: 0; font-size: 1.1rem; letter-spacing: 0.08rem; line-height: 1.3; text-align: left; }
+
+    .footer-address { grid-area: address; text-align: center; font-size: 0.95rem; letter-spacing: 1px; }
+    .footer-address p { margin: 0; }
+
+    .footer-social-media-icons { grid-area: icons; justify-content: center; gap: 22px; margin: 1vh 0 0; }
+
+    /* icons are sized in vw in the HTML - this overrides that */
+    .footer-social-media-icons svg { width: 30px; height: 30px; }
+
+    .footer-bottom { justify-content: center; text-align: center; padding: 3vh 5vw; }
+    .footer-bottom p { font-size: 0.85rem; }
+}
+
+/* touch screens: no hover "lift" (it sticks after a tap) */
+@media (hover: none) {
+    .sp-box:hover, .sp-chip:hover, .sp-rv:hover, .sp-btn:hover,
+    .open-contact-btn:hover, .contact-submit:hover { transform: none; }
+}
+
+/* small phones */
+@media (max-width: 380px) {
+    .footer-slogan p { font-size: 0.95rem; letter-spacing: 0.05rem; }
+    .footer-social-media-icons { gap: 16px; }
+    .footer-sections, .footer-social-media { font-size: 0.85rem; letter-spacing: 0.8px; }
+}

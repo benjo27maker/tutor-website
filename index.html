@@ -449,8 +449,80 @@
                     Personalised lessons from PVG-checked tutors who have excelled in the very subjects they teach.
                 </p>
 
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#contact-page">Book a lesson</a>
+                     <!-- trigger: add data-open-contact to ANY button or link -->
+                    <button type="button" class="open-contact-btn" data-open-contact>Book a Lesson</button>
+
+
+                <div id="contact-modal" class="contact-modal" aria-hidden="true">
+                    <div class="contact-modal-dialog" role="dialog" aria-modal="true" aria-label="Enquiry form">
+                        <button type="button" class="contact-modal-close" aria-label="Close form">&times;</button>
+
+                        <div class="contact-form-wrapper">
+                            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+                                <div class="contact-row">
+                                    <div class="contact-field">
+                                        <label for="m-name">Your name</label>
+                                        <input type="text" id="m-name" name="name" autocomplete="name" required>
+                                    </div>
+                                    <div class="contact-field">
+                                        <label for="m-student">Student&rsquo;s name</label>
+                                        <input type="text" id="m-student" name="student">
+                                    </div>
+                                </div>
+
+                                <div class="contact-row">
+                                    <div class="contact-field">
+                                        <label for="m-email">Email</label>
+                                        <input type="email" id="m-email" name="email" autocomplete="email" required>
+                                    </div>
+                                    <div class="contact-field">
+                                        <label for="m-phone">Phone <span class="contact-opt">(optional)</span></label>
+                                        <input type="tel" id="n-phone" name="phone" autocomplete="tel">
+                                    </div>
+                                </div>
+
+                                <fieldset class="contact-subjects">
+                                    <legend>What do you need help with?</legend>
+                                    <p class="contact-hint">Add up to 3 subjects.</p>
+
+                                    <div id="subjects-container">
+                                        <div class="form-group-row">
+                                            <select name="subject[]" aria-label="Subject" required>
+                                                <option value="" selected disabled>Subject</option>
+                                                <option>Maths</option>
+                                                <option>Physics</option>
+                                                <option>Chemistry</option>
+                                                <option>Biology</option>
+                                                <option>Applications of Maths</option>
+                                                <option>Engineering Science</option>
+                                            </select>
+                                            <select name="level[]" aria-label="Level" required>
+                                                <option value="" selected disabled>Level</option>
+                                                <option>National 5</option>
+                                                <option>Higher</option>
+                                                <option>Advanced Higher</option>
+                                            </select>
+                                            <div class="subject-actions">
+                                            <button type="button" class="subject-btn add-subject-btn" aria-label="Add another subject">+</button>
+                                            <button type="button" class="subject-btn remove-subject-btn" aria-label="Remove this subject">&minus;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <div class="contact-field">
+                                    <label for="m-info">Anything we should know? <span class="contact-opt">(optional)</span></label>
+                                    <textarea id="m-info" name="info" rows="4" placeholder="Upcoming exams, topics you find difficult, a tutor you&rsquo;d like to request&hellip;"></textarea>
+                                </div>
+
+                                <button type="submit" class="contact-submit">Send my enquiry</button>
+                                <p class="contact-fineprint">We&rsquo;ll only use your details to reply to this enquiry.</p>
+
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
@@ -649,48 +721,54 @@
             </div>
 
         </div>
-
-        <div class="service-bottom revealX">
-
-            <div class="subject-panel">
-
-                <div class="subject-picker">
-                    <h3 class="subject-heading">Find your <span class="services-hand">subject.</span></h3>
-                    <p class="subject-hint">Pick a subject and a level to see what we cover.</p>
-
-                    <p class="pill-label" id="subject-label">1 &middot; Subject</p>
-                    <div class="pill-row" role="group" aria-labelledby="subject-label">
-                        <button type="button" class="pill" data-subject="maths" aria-pressed="false" style="--i:0">Maths</button>
-                        <button type="button" class="pill" data-subject="physics" aria-pressed="false" style="--i:1">Physics</button>
-                        <button type="button" class="pill" data-subject="chemistry" aria-pressed="false" style="--i:2">Chemistry</button>
-                        <button type="button" class="pill" data-subject="biology" aria-pressed="false" style="--i:3">Biology</button>
-                        <button type="button" class="pill" data-subject="mathsapps" data-levels="nat5,higher" aria-pressed="false" style="--i:4">Maths Apps</button>
-                        <button type="button" class="pill" data-subject="engineeringscience" aria-pressed="false" style="--i:5">Engineering Science</button>
+            <div class="service-bottom revealX">
+    
+                <div class="subject-panel">
+    
+                    <div class="subject-picker">
+                        <h3 class="subject-heading">Find your <span class="services-hand">subject.</span></h3>
+                        <p class="subject-hint">Pick a subject and a level to see what we cover.</p>
+    
+                        <p class="pill-label" id="subject-label">1 &middot; Subject</p>
+                        <div class="pill-row" role="group" aria-labelledby="subject-label">
+                            <button type="button" class="pill" data-subject="maths" aria-pressed="false" style="--i:0">Maths</button>
+                            <button type="button" class="pill" data-subject="physics" aria-pressed="false" style="--i:1">Physics</button>
+                            <button type="button" class="pill" data-subject="chemistry" aria-pressed="false" style="--i:2">Chemistry</button>
+                            <button type="button" class="pill" data-subject="biology" aria-pressed="false" style="--i:3">Biology</button>
+                            <button type="button" class="pill" data-subject="mathsapps" data-levels="nat5,higher" aria-pressed="false" style="--i:4">Maths Apps</button>
+                            <button type="button" class="pill" data-subject="engineeringscience" aria-pressed="false" style="--i:5">Engineering Science</button>
+                        </div>
+    
+                        <p class="pill-label" id="level-label">2 &middot; Level</p>
+                        <div class="pill-row pill-row-levels" role="group" aria-labelledby="level-label">
+                            <button type="button" class="pill" data-level="nat5" aria-pressed="false" style="--i:6">NAT 5</button>
+                            <button type="button" class="pill" data-level="higher" aria-pressed="false" style="--i:7">Higher</button>
+                            <button type="button" class="pill" data-level="advancedhigher" aria-pressed="false" style="--i:8">Advanced Higher</button>
+                            <a class="pill pill-ask" href="#contact-page" style="--i:9">Not sure? Ask us &rarr;</a>
+                        </div>
                     </div>
-
-                    <p class="pill-label" id="level-label">2 &middot; Level</p>
-                    <div class="pill-row pill-row-levels" role="group" aria-labelledby="level-label">
-                        <button type="button" class="pill" data-level="nat5" aria-pressed="false" style="--i:6">NAT 5</button>
-                        <button type="button" class="pill" data-level="higher" aria-pressed="false" style="--i:7">Higher</button>
-                        <button type="button" class="pill" data-level="advancedhigher" aria-pressed="false" style="--i:8">Advanced Higher</button>
-                        <a class="pill pill-ask" href="#contact-page" style="--i:9">Not sure? Ask us &rarr;</a>
+    
+                    <div class="subject-info" aria-live="polite">
+                        <p class="subject-tag" id="subject-tag" hidden></p>
+                        <h4 class="subject-title" id="subject-title">What we Offer</h4>
+                        <div class="subject-text" id="subject-text">
+                            <p>UpGrade Tutors offers tutoring in a wide range of STEM subjects aligned with the SQA curriculum</p>
+                            <br>
+                            <p>Our tutors offer tutoring at NAT 5, Higher and Advanced Higher levels.</p>
+                        </div>
+                        <!-- NEW: only appears once a subject AND a level are picked and that page exists -->
+                        <a class="btn btn-primary" id="subject-page-btn" href="#" style="display:none"></a>
                     </div>
+    
                 </div>
-
-                <div class="subject-info" aria-live="polite">
-                    <p class="subject-tag" id="subject-tag" hidden></p>
-                    <h4 class="subject-title" id="subject-title">What we Offer</h4>
-                    <div class="subject-text" id="subject-text">
-                        <p>UpGrade Tutors offers tutoring in a wide range of STEM subjects aligned with the SQA curriculum</p>
-                        <br>
-                        <p>Our tutors offer tutoring at NAT 5, Higher and Advanced Higher levels.</p>
-                    </div>
+    
+                <!-- MOVED: Book a lesson now sits underneath the panel -->
+                <div class="subject-cta">
                     <a class="btn btn-primary" href="#contact-page">Book a lesson</a>
                 </div>
-
+    
             </div>
-
-        </div>
+    
 
     </div>
 
@@ -1552,6 +1630,57 @@
 
         items.forEach(el => observer.observe(el));
         });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const contactModal = document.getElementById('contact-modal');
+        if (!contactModal) return;
+        document.body.appendChild(contactModal);   // escapes the hero's stacking context
+
+        const contactClose = contactModal.querySelector('.contact-modal-close');
+        let lastFocus = null;
+
+        function openContact(tutor) {
+            lastFocus = document.activeElement;
+            contactModal.classList.add('open');
+            contactModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            const info = document.getElementById('m-info');
+            if (tutor && info) {
+                const note = "I'd like to request " + tutor + " as my tutor.";
+                if (!info.value.trim() || info.value === info.dataset.auto) {
+                    info.value = note;
+                    info.dataset.auto = note;
+                }
+            }
+
+            setTimeout(() => document.getElementById('m-name')?.focus({ preventScroll: true }), 150);
+        }
+
+        function closeContact() {
+            contactModal.classList.remove('open');
+            contactModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        document.querySelectorAll('[data-open-contact]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openContact(btn.dataset.tutor);
+            });
+        });
+
+        contactClose.addEventListener('click', closeContact);
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) closeContact();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactModal.classList.contains('open')) closeContact();
+        });
+    });
     </script>
     
 </body>
